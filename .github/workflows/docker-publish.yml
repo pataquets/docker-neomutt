@@ -3,7 +3,7 @@ name: Publish Docker image
 env:
   DOCKERHUB_IMAGE: pataquets/neomutt
 
-on: push
+on: [ push, workflow_dispatch ]
 
 jobs:
   buildx:
