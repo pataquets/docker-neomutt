@@ -29,12 +29,26 @@ RUN \
     curl \
     links2 \
     nano \
+    pandoc \
+    poppler-utils \
     timg \
     vim \
     w3m \
   && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/
+
+# Configure w3m key bindings:
+# - To quit without prompting (ABORT).
+# - To provide back/next buffer navigation with H/L
+#   H defaults to HELP, L defaults to LIST (ie. link list)
+RUN \
+    mkdir -vp ~/.w3m/ && \
+    echo 'keymap\t?\tHELP' | tee -a ~/.w3m/keymap && \
+    echo 'keymap\tH\tBACK' | tee -a ~/.w3m/keymap && \
+    echo 'keymap\tL\tNEXT' | tee -a ~/.w3m/keymap && \
+    echo 'keymap\tq\tABORT' | tee -a ~/.w3m/keymap && \
+    echo 'keymap\tQ\tABORT' | tee -a ~/.w3m/keymap
 
 # Install 'urlscan' for extracting URLs from messages.
 RUN \
